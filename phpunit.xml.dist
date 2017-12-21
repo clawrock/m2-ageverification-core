@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit bootstrap="./vendor/autoload.php">
+    <testsuites>
+        <testsuite name="ClawRock_AgeVerification module">
+            <directory>Test/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">Block</directory>
+            <directory suffix=".php">Helper</directory>
+            <directory suffix=".php">Model</directory>
+            <directory suffix=".php">Observer</directory>
+            <exclude>
+                <directory>Api</directory>
+                <directory>Setup</directory>
+                <directory>Test</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

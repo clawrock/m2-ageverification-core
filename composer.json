@@ -1,0 +1,38 @@
+{
+    "name": "clawrock/ageverification-module",
+    "description": "Module is responsible for mediating between frontend, controllers and specific verification methods.",
+    "require": {
+        "php": "~7.0.0",
+        "magento/framework": ">=100.1",
+        "magento/zendframework1": "^1.13",
+        "magento/module-customer": ">=100.1",
+        "magento/module-directory": ">=100.1"
+    },
+    "require-dev": {
+        "clawrock/magento-testing": "dev-master"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "ClawRock\\AgeVerification\\": ""
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:clawrock/magento-testing.git"
+        }
+    ]
+}

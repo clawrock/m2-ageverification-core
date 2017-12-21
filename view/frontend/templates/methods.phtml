@@ -1,0 +1,57 @@
+<?php
+/**
+ * @var \ClawRock\AgeVerification\Block\Methods $block
+ */
+$methodIndex = 0;
+$accordionActivate = false;
+?>
+
+<?php if ($block->isEnabled()): ?>
+    <fieldset class="fieldset av-methods" id="clawrock_av-methods">
+        <legend class="legend"><span><?php echo $block->escapeHtml(__('Age verification')) ?></span></legend><br>
+        <?php foreach ($block->getAvailableMethods() as $code => $method): ?>
+            <?php /** @var \ClawRock\AgeVerification\Api\Data\MethodInterface $method */ ?>
+            <?php if ($block->getFormData()->getAvMethod() === $code): ?>
+                <?php $accordionActivate = $methodIndex; ?>
+            <?php endif; ?>
+            <div class="field choice av-method-choice av-method-<?php echo /* @escapeNotVerified */ $code; ?>"
+                 data-role="collapsible">
+                <input id="av_method_<?php echo /* @escapeNotVerified */ $code; ?>"
+                       type="radio"
+                       class="radio"
+                       name="av_method"
+                       value="<?php echo /* @escapeNotVerified */ $code; ?>"
+                    <?php if ($block->getFormData()->getAvMethod() === $code): ?> checked="checked"<?php endif; ?>
+                       data-validate="{'validate-one-required-by-name':true}">
+                <label for="av_method_<?php echo /* @escapeNotVerified */ $code; ?>">
+                    <?php echo /* @escapeNotVerified */ __($method->getTitle()); ?>
+                </label>
+            </div>
+            <?php if ($methodBlock = $block->getMethodBlock($code)): ?>
+                <div class="fieldset av-method-form-<?php echo /* @escapeNotVerified */ $code; ?>"
+                     style="display: none;"
+                     data-role="content">
+                    <?php echo $methodBlock->setFormData($block->getFormData())->setModel($method)->toHtml(); ?>
+                </div>
+            <?php endif; ?>
+            <?php $methodIndex++; ?>
+        <?php endforeach; ?>
+    </fieldset>
+    <script type="text/javascript">
+        require([
+            'jquery',
+            'accordion'
+        ], function($) {
+            $('#clawrock_av-methods').on('beforeOpen', function(e) {
+                var $target = $(e.target);
+                $target.find('input[type=radio]').prop('checked', true);
+            });
+            $(function () {
+                var accordion = $('#clawrock_av-methods').accordion({"multipleCollapsible": false, "animate": 200});
+                <?php if ($accordionActivate !== false): ?>
+                accordion.accordion('activate', <?php echo $accordionActivate; ?>);
+                <?php endif; ?>
+            });
+        });
+    </script>
+<?php endif; ?>
